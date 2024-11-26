@@ -47,8 +47,7 @@ javac -classpath `hadoop classpath` -source 11 -target 11 AnomalyDetection.java
 jar -cvf AnomalyDetection.jar AnomalyDetection*.class</code></pre>
 
 <h4>Run the Job</h4>
-<pre><code>hadoop jar AnomalyDetection.jar AnomalyDetection \
-  /Users/drpadhaya/desktop/big_data/input/yellow_tripdata_2016-03.csv \
+<pre><code>hadoop jar AnomalyDetection.jar AnomalyDetection \your file path/input/yellow_tripdata_2016-03.csv \
   /Users/drpadhaya/desktop/big_data/output</code></pre>
 
 <h3>2. Classification</h3>
@@ -60,7 +59,7 @@ jar -cvf Classification.jar Classification*.class</code></pre>
 
 <h4>Run the Job</h4>
 <pre><code>hadoop jar Classification.jar Classification \
-  /Users/drpadhaya/desktop/big_data/input/yellow_tripdata_2016-03.csv \
+  your file path/input/yellow_tripdata_2016-03.csv \
   /Users/drpadhaya/desktop/big_data/Classification_output</code></pre>
 
 <h3>3. Regression</h3>
@@ -72,7 +71,7 @@ jar -cvf Regression.jar Regression*.class</code></pre>
 
 <h4>Run the Job</h4>
 <pre><code>hadoop jar Regression.jar Regression \
-  /Users/drpadhaya/desktop/big_data/input/yellow_tripdata_2016-03.csv \
+  your file path/input/yellow_tripdata_2016-03.csv \
   /Users/drpadhaya/desktop/big_data/Regression_output</code></pre>
 
 <h3>4. Visualization</h3>
