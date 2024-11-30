@@ -13,8 +13,14 @@ public class Regression {
 
     public static class RegressionMapper extends Mapper<LongWritable, Text, Text, Text> {
         private boolean isHeader = true;
+        private int lineCount = 0; // Counter for lines processed
+        private static final int MAX_LINES = 3000; // Maximum number of lines to process
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            if (lineCount >= MAX_LINES) {
+                return; // Stop processing after reaching the limit
+            }
+
             String line = value.toString();
 
             // Skip header row
@@ -22,6 +28,9 @@ public class Regression {
                 isHeader = false;
                 return;
             }
+
+            // Increment line count
+            lineCount++;
 
             // Split the row into fields
             String[] fields = line.split(",");

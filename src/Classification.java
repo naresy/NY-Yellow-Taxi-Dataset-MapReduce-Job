@@ -14,8 +14,14 @@ public class Classification {
     public static class ClassificationMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         private boolean isHeader = true; // Skip header row
         private final static IntWritable one = new IntWritable(1);
+        private int lineCount = 0; // Counter for lines processed
+        private static final int MAX_LINES = 3000; // Maximum number of lines to process
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            if (lineCount >= MAX_LINES) {
+                return; // Stop processing after reaching the limit
+            }
+
             String line = value.toString();
 
             // Skip the header row
@@ -23,6 +29,9 @@ public class Classification {
                 isHeader = false;
                 return;
             }
+
+            // Increment line count
+            lineCount++;
 
             // Split the row into fields using a comma delimiter
             String[] fields = line.split(",");

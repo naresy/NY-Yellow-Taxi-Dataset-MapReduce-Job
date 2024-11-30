@@ -4,7 +4,7 @@ import seaborn as sns
 
 # Step 1: Read the AnomalyDetection output
 # Replace '/path/to/output/part-r-00000' with your actual file path
-file_path = '../output/part-r-00000'
+file_path = '/home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Visualization/AnomalyDection_Output/output/part-r-00000'
 
 # Load the data into a DataFrame
 data = []
