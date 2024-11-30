@@ -14,7 +14,7 @@ public class Regression {
     public static class RegressionMapper extends Mapper<LongWritable, Text, Text, Text> {
         private boolean isHeader = true;
         private int lineCount = 0; // Counter for lines processed
-        private static final int MAX_LINES = 3000; // Maximum number of lines to process
+        private static final int MAX_LINES = 100000; // Maximum number of lines to process
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             if (lineCount >= MAX_LINES) {
