@@ -4,7 +4,7 @@ import seaborn as sns
 
 # Step 1: Load the classification output data
 # Replace '/path/to/output/part-r-00000' with your actual file path
-file_path = '../Classification_output/part-r-00000'
+file_path = 'Classification_Output/part-r-00000'
 
 # Load the data into a DataFrame
 data = []
