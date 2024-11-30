@@ -1,5 +1,5 @@
 <body>
-<h1>NY Yellow Taxi Dataset Analysis with MapReduce(Working On It)</h1>
+<h1>NY Yellow Taxi Dataset Analysis with MapReduce</h1>
 <p>This repository contains MapReduce jobs and visualizations for analyzing the NY Yellow Taxi Dataset. The three MapReduce jobs include:</p>
 <ul>
 <li><strong>Anomaly Detection</strong>: Detect anomalies in trip distances.</li>
@@ -25,16 +25,18 @@
 │   ├── AnomalyDetection.jar
 │   ├── Classification.jar
 │   ├── Regression.jar
-├── Visualization/        # Python scripts for visualization
+├── Visualization/        # Python scripts and outputs for visualization
 │   ├── AnomalyDetection.py
-│   ├── Classification.py
-│   └── Regression.py
+│   ├── classification.py
+│   ├── Performance.py
+│   ├── AnomalyDection_Output/  # Output of AnomalyDetection job
+│   ├── Classification_Output/  # Output of Classification job
+│   └── Regression_Output/      # Output of Regression job
 ├── input/                # Input dataset
 │   ├── yellow_tripdata_2016-03.csv
-├── output/               # Output of AnomalyDetection job
-├── Classification_output/ # Output of Classification job
-├── Regression_output/    # Output of Regression job
+├── cmd.txt               # Command or execution notes
 └── README.md             # Project documentation
+
     </pre>
 
 <h2>Commands and Execution Steps</h2>
@@ -48,7 +50,7 @@ jar -cvf AnomalyDetection.jar AnomalyDetection*.class</code></pre>
 
 <h4>Run the Job</h4>
 <pre><code>hadoop jar AnomalyDetection.jar AnomalyDetection \your file path/input/yellow_tripdata_2016-03.csv \
-  /Users/drpadhaya/desktop/big_data/output</code></pre>
+ your path</code></pre>
 
 <h3>2. Classification</h3>
 <p>This job analyzes payment trends over time.</p>
@@ -60,7 +62,7 @@ jar -cvf Classification.jar Classification*.class</code></pre>
 <h4>Run the Job</h4>
 <pre><code>hadoop jar Classification.jar Classification \
   your file path/input/yellow_tripdata_2016-03.csv \
-  /Users/drpadhaya/desktop/big_data/Classification_output</code></pre>
+  your Path</code></pre>
 
 <h3>3. Regression</h3>
 <p>This job predicts fare amounts based on trip attributes.</p>
@@ -72,7 +74,7 @@ jar -cvf Regression.jar Regression*.class</code></pre>
 <h4>Run the Job</h4>
 <pre><code>hadoop jar Regression.jar Regression \
   your file path/input/yellow_tripdata_2016-03.csv \
-  /Users/drpadhaya/desktop/big_data/Regression_output</code></pre>
+  yourpath</code></pre>
 
 <h3>4. Visualization</h3>
 <p>Use the provided Python scripts to generate visualizations from the MapReduce job outputs.</p>

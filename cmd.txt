@@ -1,0 +1,173 @@
+1.Master Node and DataNode 
+1. pem key path 
+    Your local Machine path 
+2. Host
+  ssh -i /Yourpath/New_big_data.pem ubuntu@
+
+3. Gen key 
+  ssh-keygen -t rsa -N " -f /home/ubuntu/.ssh/id_rsa
+
+4. Authorized key
+   cat id_rsa.pub
+   cat /home/ubuntu/.ssh/authorized_keys
+5. vi sudo /etc/hosts 
+
+6.Java Installation
+  sudo apt-get install openjdk-8-jdk -y
+7.nano ~/.bashrc
+   
+   
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/home/ubuntu/hadoop-2.6.5
+export PATH=$PATH:$HADOOP_HOME/bin
+export PATH=$PATH:$HADOOP_HOME/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export YARN_HOME=$HADOOP_HOME
+
+8. source ~/.bash_profile
+
+
+ Hadoop Install wget https://archive.apache.org/dist/hadoop/core/hadoop-2.6.5/hadoop-2.6.5.tar.gz   then unzip
+
+9.vi core-site.xml
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://master:9000/</value>
+</property>
+<property>
+    <name>hadoop.tmp.dir</name>
+    <value>file:/home/ubuntu/hadoop-2.6.5/tmp</value>
+</property>
+
+10.vi hdfs-site.xml
+   <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/home/ubuntu/hadoop-2.6.5/dfs/name</value>
+</property>
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/home/ubuntu/hadoop-2.6.5/dfs/data</value>
+</property>
+<property>
+    <name>dfs.replication</name>
+    <value>3</value>
+</property>
+11.vi mapred-site.xml.template
+
+    <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+</property>
+
+12. vi yarn-site.xml
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+</property>
+<property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.address</name>
+    <value>master:8032</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+    <value>master:8030</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+    <value>master:8035</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.admin.address</name>
+    <value>master:8033</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.webapp.address</name>
+    <value>master:8088</value>
+</property>
+
+13. vi hadoop-env.sh
+     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_PREFIX=/home/ubuntu/hadoop-2.6.5
+export HADOOP_CONF_DIR=/home/ubuntu/hadoop-2.6.5/etc/hadoop
+export HADOOP_HOME=/home/ubuntu/hadoop-2.6.5
+
+for file in $HADOOP_HOME/share/hadoop/*.jar;
+do
+    export CLASSPATH=$CLASSPATH:$file
+done
+
+for file in $HADOOP_HOME/share/hadoop/*/lib/*.jar;
+do
+    export CLASSPATH=$CLASSPATH:$file
+done
+
+
+14.source hadoop-env.sh
+
+
+
+
+
+
+
+Map Reduce Job  
+
+1.For  anomaly detection
+
+javac -classpath `hadoop classpath` -source 1.8 -target 1.8 AnomalyDetection.java
+jar -cvf AnomalyDetection.jar AnomalyDetection*.class
+
+hadoop jar AnomalyDetection.jar AnomalyDetection /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/yellow_tripdata_2016-03.csv /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/AnomalyDection_Output
+
+hdfs dfs -rm -r /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/AnomalyDection_Output
+
+hdfs dfs -get /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/AnomalyDection_Output /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job
+
+
+hdfs dfs -mkdir -p /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/
+
+ hdfs dfs -put /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/yellow_tripdata_2016-03.csv /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/
+
+ 
+
+2. For Classification
+
+javac -classpath `hadoop classpath` -source 1.8 -target 1.8 Classification.java
+jar -cvf Classification.jar Classification*.class
+hadoop jar Classification.jar Classification /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/yellow_tripdata_2016-03.csv /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Classification_Output
+
+hdfs dfs -get /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Classification_Output /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job
+
+hdfs dfs -rm -r /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Classification_Output
+
+
+
+
+
+3. Regression:
+
+javac -classpath `hadoop classpath` -source 1.8 -target 1.8 Regression.java
+jar -cvf Regression.jar Regression*.class
+
+hadoop jar Regression.jar Regression /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/yellow_tripdata_2016-03.csv /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Regression_Output
+
+hdfs dfs -get /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Regression_Output /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job
+
+hdfs dfs -rm -r /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/Regression_Output
+
+
+To Move Output:
+hdfs dfs -put /home/ubuntu/yellow_tripdata_2016-03.csv /home/ubuntu/NY-Yellow-Taxi-Dataset-MapReduce-Job/input/
+
+
+For Visualization
+
+Current path python AnomalyDetection.py
+Current path python classification.py
+Current path python Performance.py
