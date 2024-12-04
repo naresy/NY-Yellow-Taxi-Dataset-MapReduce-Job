@@ -38,8 +38,7 @@
 └── README.md             # Project documentation
 
     </pre>
-
-<h2>Commands and Execution Steps</h2>
+    <h2>Commands and Execution Steps</h2>
 
 <h3>1. Anomaly Detection</h3>
 <p>This job detects anomalies in trip distances.</p>
