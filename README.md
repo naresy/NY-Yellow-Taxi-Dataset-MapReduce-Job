@@ -37,8 +37,8 @@
 ├── cmd.txt               # Command or execution notes
 └── README.md             # Project documentation
 
-    </pre>
-    <h2>Commands and Execution Steps</h2>
+</pre>
+<h2>Commands and Execution Steps</h2>
 
 <h3>1. Anomaly Detection</h3>
 <p>This job detects anomalies in trip distances.</p>
